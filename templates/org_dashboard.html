@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard for {{ result.name }}</title>
+</head>
+<body>
+<h1>Dashboard for {{ result.name }}</h1>
+<h3>Basic Details</h3>
+<form action = "http://localhost:5000/update" method = "POST">
+    Acronym: <input type="text" name="acronym" value="{{ result.acronym }}"><br>
+    Date Founded: <input type="text" name="date_founded" value="{{ result.date_founded }}"><br>
+    Description:<br>
+    <textarea name="description">{{ result.description }}</textarea>
+    <p><input type="submit" value="submit"/></p>
+</form>
+</body>
+</html>
