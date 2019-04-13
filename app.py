@@ -29,28 +29,28 @@ def index():
     return "Hello World!"
 
 
-@app.route('/master_admin')
+@app.route('/master_admin/')
 def all_orgs():
     db = Database()
     res = db.list_all_orgs()
     return render_template('all_orgs.html', result=res, content_type='application/json')
 
 
-@app.route('/org/details/<path:text>')
+@app.route('/org_details/<path:text>/')
 def org_details(text):
     db = Database()
     res = db.get_org(text)
     return render_template('org_details.html', result=res[0], content_type='application/json')
 
 
-@app.route('/org/dashboard/<path:text>')
+@app.route('/org_edit/<path:text>/')
 def org_dashboard(text):
     db = Database()
     res = db.get_org(text)
-    return render_template('org_dashboard.html', result=res[0], content_type='application/json')
+    return render_template('org_edit.html', result=res[0], content_type='application/json')
 
 
-@app.route('/insert', methods=['POST'])
+@app.route('/insert/', methods=['POST'])
 def insert_data():
     form_data = request.form
     db = Database()
@@ -59,7 +59,7 @@ def insert_data():
     return redirect('/')
 
 
-@app.route('/update', methods=['POST'])
+@app.route('/update/', methods=['POST'])
 def update_data():
     form_data = request.form
     db = Database()
