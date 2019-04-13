@@ -6,7 +6,8 @@
 </head>
 <body>
 
-{% if result %}
+{% if orgs and users %}
+    <h2>Orgs</h2>
     <table id="student_orgs" style="width:100%">
         <tr>
             <th>Org Name</th>
@@ -14,7 +15,7 @@
             <th>Org Description</th>
             <th>Date Founded</th>
         </tr>
-        {% for row in result %}
+        {% for row in orgs %}
             <tr>
                 <th>{{ row.name }}</th>
                 <th>{{ row.acronym }}</th>
@@ -23,13 +24,32 @@
             </tr>
         {% endfor %}
     </table>
-    <h3>Insert more organizations</h3>
-    <form action = "http://localhost:5000/insert" method = "POST">
+    <h2>Students</h2>
+    <table id="students" style="width:100%">
+        <tr>
+            <th>Name</th>
+            <th>ID</th>
+        </tr>
+        {% for row in users %}
+            <tr>
+                <th>{{ row.name }}</th>
+                <th>{{ row.id }}</th>
+            </tr>
+        {% endfor %}
+    </table>
+    <h2>Insert more organizations</h2>
+    <form action = "http://localhost:5000/insert_org" method = "POST">
         Name: <input type="text" name="name"><br>
         Acronym: <input type="text" name="acronym"><br>
         Date Founded: <input type="text" name="date_founded"><br>
         Description:<br>
         <textarea name="description"></textarea>
+        <p><input type="submit" value="submit"/></p>
+    </form>
+    <h2>Insert more users</h2>
+    <form action = "http://localhost:5000/insert_user" method = "POST">
+        Name: <input type="text" name="name"><br>
+        ID: <input type="text" name="id"><br>
         <p><input type="submit" value="submit"/></p>
     </form>
 {% else %}

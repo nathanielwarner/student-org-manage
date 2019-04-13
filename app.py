@@ -23,6 +23,16 @@ class Database:
         org_data = data.to_dict()
         return self.db.orgs.replace_one({"acronym": org_data["acronym"]}, org_data)
 
+    def list_all_users(self):
+        result = self.db.users.find()
+        return result
+
+    def get_user(self, user_id):
+        return self.db.users.find({"id": user_id})
+
+    def insert_user(self, data):
+        return self.db.users.insert_one(data.to_dict()).inserted_id
+
 
 @app.route('/')
 def index():
@@ -32,8 +42,9 @@ def index():
 @app.route('/master_admin/')
 def all_orgs():
     db = Database()
-    res = db.list_all_orgs()
-    return render_template('all_orgs.html', result=res, content_type='application/json')
+    orgs = db.list_all_orgs()
+    users = db.list_all_users()
+    return render_template('master_admin.html', orgs=orgs, users=users, content_type='application/json')
 
 
 @app.route('/org_details/<path:text>/')
@@ -50,8 +61,15 @@ def org_dashboard(text):
     return render_template('org_edit.html', result=res[0], content_type='application/json')
 
 
-@app.route('/insert/', methods=['POST'])
-def insert_data():
+@app.route('/user_dash/<path:text>/')
+def user_dashboard(text):
+    db = Database()
+    res = db.get_user(text)
+    return render_template('user_dash.html', result=res[0], content_type='application/json')
+
+
+@app.route('/insert_org/', methods=['POST'])
+def insert_org():
     form_data = request.form
     db = Database()
     response = db.insert_org(form_data)
@@ -59,13 +77,22 @@ def insert_data():
     return redirect('/')
 
 
-@app.route('/update/', methods=['POST'])
-def update_data():
+@app.route('/update_org/', methods=['POST'])
+def update_org():
     form_data = request.form
     db = Database()
     response = db.update_org(form_data)
     print(response)
     return redirect('/')
+
+
+@app.route('/insert_user/', methods=['POST'])
+def insert_user():
+    form_data = request.form
+    db = Database()
+    response = db.insert_user(form_data)
+    print(response)
+    return redirect('/master_admin/')
 
 
 if __name__ == '__main__':
