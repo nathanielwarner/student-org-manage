@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Student Organizations</title>
+</head>
+<body>
+
+{% if result %}
+    <table id="student_orgs" style="width:100%">
+    <tr>
+        <th>Org ID</th>
+        <th>Org Name</th>
+    </tr>
+    {% for row in result %}
+        <tr>
+            <th>{{ row.org_id }}</th>
+            <th>{{ row.org_name }}</th>
+        </tr>
+    {% endfor %}
+</table>
+{% else %}
+    <p>Cannot connect to data</p>
+{% endif %}
+
+
+</body>
+</html>
