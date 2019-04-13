@@ -8,17 +8,27 @@
 
 {% if result %}
     <table id="student_orgs" style="width:100%">
-    <tr>
-        <th>Org ID</th>
-        <th>Org Name</th>
-    </tr>
-    {% for row in result %}
         <tr>
-            <th>{{ row.org_id }}</th>
-            <th>{{ row.org_name }}</th>
+            <th>Org Name</th>
+            <th>Org Description</th>
+            <th>Date Founded</th>
         </tr>
-    {% endfor %}
-</table>
+        {% for row in result %}
+            <tr>
+                <th>{{ row.name }}</th>
+                <th>{{ row.description }}</th>
+                <th>{{ row.date_founded }}</th>
+            </tr>
+        {% endfor %}
+    </table>
+    <h3>Insert more organizations</h3>
+    <form action = "http://localhost:5000/insert" method = "POST">
+        Name: <input type="text" name="name"><br>
+        Date Founded: <input type="text" name="date_founded"><br>
+        Description:<br>
+        <textarea name="description"></textarea>
+        <p><input type="submit" value="submit"/></p>
+    </form>
 {% else %}
     <p>Cannot connect to data</p>
 {% endif %}
